@@ -305,25 +305,21 @@ main {
 }
 
 .video-panel {
-  padding: 0;
+  width: 100%;
+  overflow: hidden;
 }
 
 .figure-panel,
-.video-panel video {
-  width: 100%;
+.video-panel {
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: #ffffff;
+  box-shadow: var(--shadow-soft);
 }
 
 .figure-panel {
   margin: 0;
   overflow: hidden;
-}
-
-.figure-panel img,
-.video-panel video {
-  border: 1px solid var(--line);
-  border-radius: 18px;
-  background: #ffffff;
-  box-shadow: var(--shadow-soft);
 }
 
 .figure-panel img {
@@ -334,6 +330,7 @@ main {
 }
 
 .video-panel video {
+  width: 100%;
   background: #101217;
 }
 
