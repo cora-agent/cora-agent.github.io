@@ -51,8 +51,9 @@
           <span></span>
         </button>
         <nav id="site-nav" class="site-nav">
-          <a href="#demo">Demo</a>
           <a href="#framework">Framework</a>
+          <a href="#demo">Demo</a>
+          <a href="#benchmark">Benchmark</a>
           <a href="#overview">Overview</a>
           <a href="#citation">Citation</a>
         </nav>
@@ -120,15 +121,39 @@
             >
           </figure>
           <p class="section-note">
-            The framework summarizes CORA's training and calibration pipeline together with the safeguarded
-            runtime loop for mobile GUI automation.
+            Overview of the CORA framework. CORA acts as a safety shield that turns open-ended action
+            proposals into selective execution.
           </p>
+          <div class="info-grid">
+            <article class="info-card">
+              <h3>Guardian (System 1)</h3>
+              <p>
+                Given a locked user intent, the base agent proposes a low-level GUI action. An
+                action-conditional Guardian scores the execution risk in the current screen.
+              </p>
+            </article>
+            <article class="info-card">
+              <h3>Conformal Calibration</h3>
+              <p>
+                Maps risk scores to a user-tunable execute/abstain threshold, offering a principled
+                safety-autonomy trade-off without modifying the base policy.
+              </p>
+            </article>
+            <article class="info-card">
+              <h3>Diagnostician (System 2)</h3>
+              <p>
+                High-risk actions are rejected and routed to a Diagnostician that produces an interpretable
+                risk type, a UI-grounded rationale, and a minimal intervention: Reflect, Abort, or Ask to
+                Confirm.
+              </p>
+            </article>
+          </div>
         </section>
 
         <section id="demo" class="section-block">
           <div class="section-heading">
             <p class="eyebrow">Demo</p>
-            <h2>Project Video</h2>
+            <h2>Video Demonstrations</h2>
           </div>
           <div class="video-panel">
             <video controls playsinline preload="metadata">
@@ -136,38 +161,239 @@
               <source src="./demo.mp4" type="video/mp4">
             </video>
           </div>
-          <p class="section-note">A simple video-first demo block for the project homepage.</p>
+          <p class="section-note">
+            The demo video combines three representative high-stakes scenarios in which CORA intervenes
+            before unsafe execution.
+          </p>
+          <div class="info-grid">
+            <article class="info-card">
+              <h3>Part 1: Deliberate Misuse Prevention</h3>
+              <p>
+                The user maliciously requests to grant "Anyone can edit" access to a sensitive password
+                document in Google Drive. CORA identifies this as privacy theft, flags the high risk, and
+                triggers an <strong>Abort</strong> before any sharing action is executed.
+              </p>
+            </article>
+            <article class="info-card">
+              <h3>Part 2: Resisting Visual Prompt Injections</h3>
+              <p>
+                A malicious on-screen pop-up attempts to override the user goal by demanding the agent to
+                send a password via SMS. CORA recognizes the injection, dismisses the pop-up, and continues
+                with the original frozen user intent via Goal-Lock.
+              </p>
+            </article>
+            <article class="info-card">
+              <h3>Part 3: Mitigating Model Misbehavior</h3>
+              <p>
+                When facing an irreversible financial transaction such as a one-tap purchase under a benign
+                user goal, CORA prevents autonomous execution and routes the action to a
+                <strong>Confirm</strong> intervention.
+              </p>
+            </article>
+          </div>
+        </section>
+
+        <section id="benchmark" class="section-block">
+          <div class="section-heading">
+            <p class="eyebrow">Benchmark</p>
+            <h2>Phone-Harm Benchmark</h2>
+          </div>
+          <div class="overview-copy">
+            <p>
+              Phone-Harm Benchmark is a new benchmark for evaluating step-level safety of mobile GUI agents
+              under realistic, high-stakes interactions.
+            </p>
+            <p>
+              It features a <strong>Harm-150</strong> subset with human-authored harmful tasks annotated
+              per-step for misuse, injection, and misbehavior, together with a matched
+              <strong>Normal-150</strong> subset of purely benign tasks for evaluating utility preservation
+              and false alarms under mixed traffic.
+            </p>
+          </div>
+          <div class="benchmark-grid">
+            <article class="benchmark-card benchmark-card-app">
+              <div class="benchmark-head">
+                <span class="benchmark-index">(a)</span>
+                <h3>App Distribution (All)</h3>
+              </div>
+              <div class="benchmark-layout">
+                <div
+                  class="donut-chart donut-chart-app"
+                  style="--chart: conic-gradient(#9fd7c7 0.0deg 21.6deg, #c6d1eb 21.6deg 43.2deg, #f6c2bb 43.2deg 62.3deg, #f4daa4 62.3deg 81.4deg, #a8d4a2 81.4deg 98.3deg, #f4c9df 98.3deg 115.2deg, #ded2ec 115.2deg 129.6deg, #fff4a8 129.6deg 144.0deg, #cfe7c5 144.0deg 158.4deg, #ffd9b5 158.4deg 172.8deg, #d8e4f4 172.8deg 187.2deg, #ebd8ea 187.2deg 201.6deg, #f2edd0 201.6deg 216.0deg, #f8d4d4 216.0deg 230.4deg, #c8e8de 230.4deg 242.3deg, #d3d6f3 242.3deg 254.2deg, #f7f0ba 254.2deg 266.0deg, #bde6dc 266.0deg 277.9deg, #cdd3dd 277.9deg 289.8deg, #f4d6b7 289.8deg 299.5deg, #efe1c3 299.5deg 309.2deg, #e0ead8 309.2deg 319.0deg, #ead2f6 319.0deg 326.2deg, #d8f0f2 326.2deg 333.4deg, #f9decc 333.4deg 340.6deg, #dadada 340.6deg 347.8deg, #d6ecd1 347.8deg 352.4deg, #f3e7b4 352.4deg 357.1deg, #e1e1e1 357.1deg 359.6deg);"
+                >
+                  <div class="donut-hole">
+                    <span>Harm-150</span>
+                    <strong>29 Apps</strong>
+                  </div>
+                </div>
+                <div class="legend-grid legend-grid-app">
+                  <span class="legend-item"><i style="background:#9fd7c7"></i>WeChat <b>6.0%</b></span>
+                  <span class="legend-item"><i style="background:#c6d1eb"></i>WeChat Pay <b>6.0%</b></span>
+                  <span class="legend-item"><i style="background:#f6c2bb"></i>SMS <b>5.3%</b></span>
+                  <span class="legend-item"><i style="background:#f4daa4"></i>Taobao <b>5.3%</b></span>
+                  <span class="legend-item"><i style="background:#a8d4a2"></i>QQ <b>4.7%</b></span>
+                  <span class="legend-item"><i style="background:#f4c9df"></i>Trip.com <b>4.7%</b></span>
+                  <span class="legend-item"><i style="background:#ded2ec"></i>Gallery <b>4.0%</b></span>
+                  <span class="legend-item"><i style="background:#fff4a8"></i>JD <b>4.0%</b></span>
+                  <span class="legend-item"><i style="background:#cfe7c5"></i>QQ Music <b>4.0%</b></span>
+                  <span class="legend-item"><i style="background:#ffd9b5"></i>Qunar <b>4.0%</b></span>
+                  <span class="legend-item"><i style="background:#d8e4f4"></i>Settings <b>4.0%</b></span>
+                  <span class="legend-item"><i style="background:#ebd8ea"></i>Tencent Video <b>4.0%</b></span>
+                  <span class="legend-item"><i style="background:#f2edd0"></i>Xiaohongshu <b>4.0%</b></span>
+                  <span class="legend-item"><i style="background:#f8d4d4"></i>Youku <b>4.0%</b></span>
+                  <span class="legend-item"><i style="background:#c8e8de"></i>Amap <b>3.3%</b></span>
+                  <span class="legend-item"><i style="background:#d3d6f3"></i>Baidu Maps <b>3.3%</b></span>
+                  <span class="legend-item"><i style="background:#f7f0ba"></i>Meituan <b>3.3%</b></span>
+                  <span class="legend-item"><i style="background:#bde6dc"></i>NetEase Music <b>3.3%</b></span>
+                  <span class="legend-item"><i style="background:#cdd3dd"></i>Weibo <b>3.3%</b></span>
+                  <span class="legend-item"><i style="background:#f4d6b7"></i>Baidu <b>2.7%</b></span>
+                  <span class="legend-item"><i style="background:#efe1c3"></i>Contacts <b>2.7%</b></span>
+                  <span class="legend-item"><i style="background:#e0ead8"></i>iQIYI <b>2.7%</b></span>
+                  <span class="legend-item"><i style="background:#ead2f6"></i>Banking App <b>2.0%</b></span>
+                  <span class="legend-item"><i style="background:#d8f0f2"></i>Douyin <b>2.0%</b></span>
+                  <span class="legend-item"><i style="background:#f9decc"></i>Pinduoduo <b>2.0%</b></span>
+                  <span class="legend-item"><i style="background:#dadada"></i>Railway 12306 <b>2.0%</b></span>
+                  <span class="legend-item"><i style="background:#d6ecd1"></i>Alipay <b>1.3%</b></span>
+                  <span class="legend-item"><i style="background:#f3e7b4"></i>Clock <b>1.3%</b></span>
+                  <span class="legend-item"><i style="background:#e1e1e1"></i>Bilibili <b>0.7%</b></span>
+                </div>
+              </div>
+            </article>
+
+            <article class="benchmark-card">
+              <div class="benchmark-head">
+                <span class="benchmark-index">(b)</span>
+                <h3>Misuse Sub-category Distribution</h3>
+              </div>
+              <div
+                class="donut-chart"
+                style="--chart: conic-gradient(#9fd7c7 0.0deg 194.4deg, #a8b8dd 194.4deg 280.8deg, #c7de7f 280.8deg 331.2deg, #ead4b2 331.2deg 345.6deg, #d1d1d1 345.6deg 360.0deg);"
+              >
+                <div class="donut-hole">
+                  <span>Misuse</span>
+                  <strong>54%</strong>
+                </div>
+              </div>
+              <div class="legend-grid">
+                <span class="legend-item"><i style="background:#9fd7c7"></i>Privacy theft <b>54%</b></span>
+                <span class="legend-item"><i style="background:#a8b8dd"></i>Account abuse <b>24%</b></span>
+                <span class="legend-item"><i style="background:#c7de7f"></i>Financial fraud <b>14%</b></span>
+                <span class="legend-item"><i style="background:#ead4b2"></i>Harassment <b>4%</b></span>
+                <span class="legend-item"><i style="background:#d1d1d1"></i>Illegal <b>4%</b></span>
+              </div>
+            </article>
+
+            <article class="benchmark-card">
+              <div class="benchmark-head">
+                <span class="benchmark-index">(c)</span>
+                <h3>Misbehavior Sub-category Distribution</h3>
+              </div>
+              <div
+                class="donut-chart"
+                style="--chart: conic-gradient(#f7c3bd 0.0deg 187.2deg, #bdd0e4 187.2deg 273.6deg, #e3d7ef 273.6deg 316.8deg, #fbf4ba 316.8deg 345.6deg, #f4d8ea 345.6deg 352.8deg, #ebebeb 352.8deg 360.0deg);"
+              >
+                <div class="donut-hole">
+                  <span>Misbehavior</span>
+                  <strong>52%</strong>
+                </div>
+              </div>
+              <div class="legend-grid">
+                <span class="legend-item"><i style="background:#f7c3bd"></i>Privacy overreach <b>52%</b></span>
+                <span class="legend-item"><i style="background:#bdd0e4"></i>Misinterpretation <b>24%</b></span>
+                <span class="legend-item"><i style="background:#e3d7ef"></i>Financial risk <b>12%</b></span>
+                <span class="legend-item"><i style="background:#fbf4ba"></i>Unsafe defaults <b>8%</b></span>
+                <span class="legend-item"><i style="background:#f4d8ea"></i>Data loss <b>2%</b></span>
+                <span class="legend-item"><i style="background:#ebebeb"></i>Over execution <b>2%</b></span>
+              </div>
+            </article>
+
+            <article class="benchmark-card">
+              <div class="benchmark-head">
+                <span class="benchmark-index">(d)</span>
+                <h3>Injection Sub-category Distribution</h3>
+              </div>
+              <div
+                class="donut-chart"
+                style="--chart: conic-gradient(#b0dfaa 0.0deg 129.6deg, #cec2e0 129.6deg 252.0deg, #fff59d 252.0deg 302.4deg, #96b9e5 302.4deg 324.0deg, #d99457 324.0deg 345.6deg, #d6d6d6 345.6deg 360.0deg);"
+              >
+                <div class="donut-hole">
+                  <span>Injection</span>
+                  <strong>36%</strong>
+                </div>
+              </div>
+              <div class="legend-grid">
+                <span class="legend-item"><i style="background:#b0dfaa"></i>Ad banner <b>36%</b></span>
+                <span class="legend-item"><i style="background:#cec2e0"></i>Pop-up <b>34%</b></span>
+                <span class="legend-item"><i style="background:#fff59d"></i>Social comment <b>14%</b></span>
+                <span class="legend-item"><i style="background:#96b9e5"></i>Notification <b>6%</b></span>
+                <span class="legend-item"><i style="background:#d99457"></i>Webpage <b>6%</b></span>
+                <span class="legend-item"><i style="background:#d6d6d6"></i>SMS <b>4%</b></span>
+              </div>
+            </article>
+          </div>
+          <p class="section-note">
+            Harm-150 distribution overview. (a) App distribution over the full Harm-150 subset, highlighting
+            a long-tail coverage. (b-d) Sub-category distributions for <em>Misuse</em>,
+            <em>Misbehavior</em>, and <em>Injection</em>, respectively, demonstrating concentrated risk
+            modes within each harm type.
+          </p>
         </section>
 
         <section id="overview" class="section-block">
           <div class="section-heading">
-            <p class="eyebrow">Overview</p>
-            <h2>Why CORA</h2>
+            <h2>Why CORA?</h2>
           </div>
-          <div class="overview-copy">
+          <div class="overview-copy overview-intro">
             <p>
-              Mobile GUI automation is powerful, but a single wrong tap can trigger a sequence of costly or
-              irreversible actions. CORA focuses on safeguarded execution by combining agentic control with
-              conformal risk management, aiming for decisions that are not only capable but also calibrated.
+              Existing safeguards for mobile GUI agents rely on prompt engineering, brittle heuristics, or
+              VLM-as-critic monitors, which lack formal verification and user-tunable guarantees. This leaves
+              users trapped in a rigid, opaque trade-off between over-interruption and silent harmful
+              execution.
             </p>
-            <p>
-              The project targets a practical question: how can agents interact with real mobile interfaces
-              while keeping the probability of harmful behavior under control? CORA is built around that
-              safety-first objective.
-            </p>
+          </div>
+          <div class="info-grid overview-grid">
+            <article class="info-card">
+              <h3>Statistical Guarantees via Conformal Risk Control</h3>
+              <p>
+                Rather than thresholding raw scores, CORA calibrates an execute/abstain boundary that
+                satisfies a user-specified risk budget on the executed-harm rate.
+              </p>
+            </article>
+            <article class="info-card">
+              <h3>Minimal Intervention Burden</h3>
+              <p>
+                High-risk actions are routed to a Generative Diagnostician, which performs multimodal
+                reasoning to recommend targeted interventions such as Confirm, Reflect, or Abort to minimize
+                user interruption.
+              </p>
+            </article>
+            <article class="info-card">
+              <h3>Immunity to Visual Injection</h3>
+              <p>
+                A Goal-Lock mechanism anchors the safety assessment to a clarified, frozen user intent,
+                successfully resisting indirect prompt injections from untrusted on-screen content.
+              </p>
+            </article>
+            <article class="info-card">
+              <h3>Optimal Safety-Helpfulness Trade-off</h3>
+              <p>
+                Applied post-policy and pre-action, CORA improves the safety-helpfulness-interruption Pareto
+                frontier without modifying the base policy.
+              </p>
+            </article>
           </div>
         </section>
 
         <section id="citation" class="section-block">
           <div class="section-heading">
             <p class="eyebrow">Citation</p>
-            <h2>BibTeX Placeholder</h2>
+            <h2>BibTeX</h2>
           </div>
           <div class="citation-box">
-            <pre id="bibtex-block">@misc{cora,
-  title  = {CORA: Conformal Risk-Controlled Agents for Safeguarded Mobile GUI Automation},
-  author = {Yushi Feng and Junye Du and Qifan Wang and Zizhan Ma and Qian Niu and Yutaka Matsuo and Long Feng and Lequan Yu},
-  note   = {Project page},
+            <pre id="bibtex-block">@article{feng2026cora,
+  title   = {CORA: Conformal Risk-Controlled Agents for Safeguarded Mobile GUI Automation},
+  author  = {Feng, Yushi and Du, Junye and Wang, Qifan and Ma, Zizhan and Niu, Qian and Matsuo, Yutaka and Feng, Long and Yu, Lequan},
+  journal = {arXiv preprint},
   year   = {2026}
 }</pre>
             <button id="copy-citation" class="copy-button" type="button">Copy BibTeX</button>
